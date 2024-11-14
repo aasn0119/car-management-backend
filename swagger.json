@@ -1,0 +1,281 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Car Management API",
+    "version": "1.0.0",
+    "description": "API documentation for the Car Management Application"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:5000/api",
+      "description": "Local server"
+    }
+  ],
+  "paths": {
+    "/auth/register": {
+      "post": {
+        "summary": "Register a new user",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "username": { "type": "string" },
+                  "email": { "type": "string" },
+                  "password": { "type": "string" }
+                },
+                "required": ["username", "email", "password"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": { "description": "User registered successfully" },
+          "400": { "description": "User already exists" }
+        }
+      }
+    },
+    "/auth/login": {
+      "post": {
+        "summary": "Login an existing user",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": { "type": "string" },
+                  "password": { "type": "string" }
+                },
+                "required": ["email", "password"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Login successful",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "token": { "type": "string" }
+                  }
+                }
+              }
+            }
+          },
+          "400": { "description": "Invalid credentials" }
+        }
+      }
+    },
+    "/cars/addCar": {
+      "post": {
+        "summary": "Create a new car",
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "title": { "type": "string" },
+                  "description": { "type": "string" },
+                  "make": { "type": "string" },
+                  "model": { "type": "string" },
+                  "year": { "type": "string" },
+                  "carType": { "type": "string" },
+                  "condition": { "type": "string" },
+                  "price": { "type": "string" },
+                  "color": { "type": "string" },
+                  "transmission": { "type": "string" },
+                  "fuelType": { "type": "string" },
+                  "tags": {
+                    "type": "array",
+                    "items": { "type": "string" }
+                  },
+                  "availability": { "type": "string" },
+                  "location": { "type": "string" },
+                  "warranty": { "type": "string" },
+                  "registration": { "type": "string" },
+                  "pricing": { "type": "string" },
+                  "financing": { "type": "string" },
+                  "images": {
+                    "type": "array",
+                    "items": { "type": "string", "format": "binary" }
+                  }
+                },
+                "required": [
+                  "title",
+                  "description",
+                  "make",
+                  "model",
+                  "year",
+                  "carType",
+                  "condition",
+                  "price",
+                  "color",
+                  "transmission",
+                  "fuelType",
+                  "tags",
+                  "availability",
+                  "location",
+                  "warranty",
+                  "registration",
+                  "pricing",
+                  "financing"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": { "description": "Car created successfully" },
+          "400": { "description": "Validation error" }
+        }
+      }
+    },
+    "/cars/getCars": {
+      "get": {
+        "summary": "Get all cars for the authenticated user",
+        "responses": {
+          "200": {
+            "description": "List of cars",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": { "$ref": "#/components/schemas/Car" }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/cars/getCarDetails/{id}": {
+      "get": {
+        "summary": "Get a specific car by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": { "description": "Car details" },
+          "404": { "description": "Car not found" }
+        }
+      }
+    },
+    "/cars/updateCarDetails/{id}": {
+      "put": {
+        "summary": "Update a car by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "title": { "type": "string" },
+                  "description": { "type": "string" },
+                  "make": { "type": "string" },
+                  "model": { "type": "string" },
+                  "year": { "type": "string" },
+                  "carType": { "type": "string" },
+                  "condition": { "type": "string" },
+                  "price": { "type": "string" },
+                  "color": { "type": "string" },
+                  "transmission": { "type": "string" },
+                  "fuelType": { "type": "string" },
+                  "tags": {
+                    "type": "array",
+                    "items": { "type": "string" }
+                  },
+                  "availability": { "type": "string" },
+                  "location": { "type": "string" },
+                  "warranty": { "type": "string" },
+                  "registration": { "type": "string" },
+                  "pricing": { "type": "string" },
+                  "financing": { "type": "string" },
+                  "images": {
+                    "type": "array",
+                    "items": { "type": "string", "format": "binary" }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "Car updated successfully" },
+          "404": { "description": "Car not found" }
+        }
+      }
+    },
+    "/cars/removeCarDetails/{id}": {
+      "delete": {
+        "summary": "Delete a car by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": { "description": "Car deleted successfully" },
+          "404": { "description": "Car not found" }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Car": {
+        "type": "object",
+        "properties": {
+          "_id": { "type": "string" },
+          "title": { "type": "string" },
+          "description": { "type": "string" },
+          "make": { "type": "string" },
+          "model": { "type": "string" },
+          "year": { "type": "string" },
+          "carType": { "type": "string" },
+          "condition": { "type": "string" },
+          "price": { "type": "string" },
+          "color": { "type": "string" },
+          "transmission": { "type": "string" },
+          "fuelType": { "type": "string" },
+          "tags": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "availability": { "type": "string" },
+          "location": { "type": "string" },
+          "warranty": { "type": "string" },
+          "registration": { "type": "string" },
+          "pricing": { "type": "string" },
+          "financing": { "type": "string" },
+          "images": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "owner": { "type": "string" }
+        }
+      }
+    }
+  }
+}
