@@ -7,8 +7,12 @@
   },
   "servers": [
     {
-      "url": "http://localhost:5000/api",
+      "url": "http://localhost:3005/api",
       "description": "Local server"
+    },
+    {
+      "url": "https://car-management-backend-ivu3.onrender.com/api",
+      "description": "Online server"
     }
   ],
   "paths": {
